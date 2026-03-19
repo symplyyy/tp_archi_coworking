@@ -57,10 +57,8 @@ public class MemberService {
     }
 
     private int resolveMaxBookings(SubscriptionType type) {
-        return switch (type) {
-            case BASIC -> 2;
-            case PRO -> 5;
-            case ENTERPRISE -> 10;
-        };
+        if (type == SubscriptionType.PRO) return 5;
+        if (type == SubscriptionType.ENTERPRISE) return 10;
+        return 2;
     }
 }
