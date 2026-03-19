@@ -58,4 +58,9 @@ public class RoomController {
     public ResponseEntity<Room> updateAvailability(@PathVariable Long id, @RequestParam boolean available) {
         return ResponseEntity.ok(roomService.updateAvailability(id, available));
     }
+
+    @PutMapping("/{id}/availability")
+    public ResponseEntity<Room> updateAvailabilityPut(@PathVariable Long id, @RequestParam boolean available) {
+        return ResponseEntity.ok(roomService.updateAvailability(id, available));
+    }
 }

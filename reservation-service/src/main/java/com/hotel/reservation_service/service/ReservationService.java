@@ -10,6 +10,7 @@ import com.hotel.reservation_service.model.Reservation;
 import com.hotel.reservation_service.model.ReservationStatus;
 import com.hotel.reservation_service.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -136,8 +137,9 @@ public class ReservationService {
     }
 
     private void updateRoomAvailability(Long roomId, boolean available) {
-        restTemplate.patchForObject(
+        restTemplate.exchange(
                 roomServiceUrl + "/rooms/" + roomId + "/availability?available=" + available,
+                HttpMethod.PUT,
                 null,
                 RoomDto.class
         );
