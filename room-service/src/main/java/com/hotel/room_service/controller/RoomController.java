@@ -3,6 +3,8 @@ package com.hotel.room_service.controller;
 import com.hotel.room_service.model.Room;
 import com.hotel.room_service.service.RoomService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,18 +48,27 @@ public class RoomController {
     }
 
     @Operation(summary = "Créer une salle")
+    @ApiResponse(responseCode = "201", description = "Salle créée")
     @PostMapping
     public ResponseEntity<Room> createRoom(@RequestBody Room room) {
         return ResponseEntity.status(HttpStatus.CREATED).body(roomService.createRoom(room));
     }
 
     @Operation(summary = "Modifier une salle")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Salle mise à jour"),
+        @ApiResponse(responseCode = "404", description = "Salle introuvable")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Room> updateRoom(@PathVariable Long id, @RequestBody Room room) {
         return ResponseEntity.ok(roomService.updateRoom(id, room));
     }
 
     @Operation(summary = "Supprimer une salle")
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Salle supprimée"),
+        @ApiResponse(responseCode = "404", description = "Salle introuvable")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
         roomService.deleteRoom(id);
