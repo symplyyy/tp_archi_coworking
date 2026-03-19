@@ -5,6 +5,7 @@ import com.hotel.reservation_service.dto.ReservationRequest;
 import com.hotel.reservation_service.dto.RoomDto;
 import com.hotel.reservation_service.exception.BookingException;
 import com.hotel.reservation_service.exception.ResourceNotFoundException;
+import com.hotel.reservation_service.builder.ReservationBuilder;
 import com.hotel.reservation_service.kafka.MemberSuspensionProducer;
 import com.hotel.reservation_service.model.Reservation;
 import com.hotel.reservation_service.model.ReservationStatus;
@@ -65,12 +66,12 @@ public class ReservationService {
             throw new BookingException("Le membre est suspendu et ne peut plus effectuer de réservation.");
         }
 
-        Reservation reservation = new Reservation();
-        reservation.setRoomId(request.getRoomId());
-        reservation.setMemberId(request.getMemberId());
-        reservation.setStartDateTime(request.getStartDateTime());
-        reservation.setEndDateTime(request.getEndDateTime());
-        reservation.setStatus(ReservationStatus.CONFIRMED);
+        Reservation reservation = new ReservationBuilder()
+                .roomId(request.getRoomId())
+                .memberId(request.getMemberId())
+                .startDateTime(request.getStartDateTime())
+                .endDateTime(request.getEndDateTime())
+                .build();
 
         Reservation saved = reservationRepository.save(reservation);
 
