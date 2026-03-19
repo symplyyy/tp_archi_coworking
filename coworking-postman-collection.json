@@ -1,0 +1,233 @@
+{
+  "info": {
+    "name": "Coworking Microservices",
+    "_postman_id": "coworking-collection-v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 - Salles",
+      "item": [
+        {
+          "name": "Créer Salle A (Paris)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Salle A\",\n    \"city\": \"Paris\",\n    \"capacity\": 8,\n    \"type\": \"MEETING_ROOM\",\n    \"hourlyRate\": 30\n}"
+            },
+            "url": { "raw": "http://localhost:8081/rooms", "host": ["localhost"], "port": "8081", "path": ["rooms"] }
+          }
+        },
+        {
+          "name": "Créer Open Space (Lyon)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Open Space\",\n    \"city\": \"Lyon\",\n    \"capacity\": 20,\n    \"type\": \"OPEN_SPACE\",\n    \"hourlyRate\": 15\n}"
+            },
+            "url": { "raw": "http://localhost:8081/rooms", "host": ["localhost"], "port": "8081", "path": ["rooms"] }
+          }
+        },
+        {
+          "name": "Créer Bureau Privé (Paris)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Bureau Privé\",\n    \"city\": \"Paris\",\n    \"capacity\": 4,\n    \"type\": \"PRIVATE_OFFICE\",\n    \"hourlyRate\": 50\n}"
+            },
+            "url": { "raw": "http://localhost:8081/rooms", "host": ["localhost"], "port": "8081", "path": ["rooms"] }
+          }
+        },
+        {
+          "name": "Lister toutes les salles",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/rooms", "host": ["localhost"], "port": "8081", "path": ["rooms"] }
+          }
+        },
+        {
+          "name": "Vérifier dispo salle 1",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/rooms/1", "host": ["localhost"], "port": "8081", "path": ["rooms", "1"] }
+          }
+        },
+        {
+          "name": "Supprimer salle 3 (Kafka test)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8081/rooms/3", "host": ["localhost"], "port": "8081", "path": ["rooms", "3"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Membres",
+      "item": [
+        {
+          "name": "Créer Alice (BASIC)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"fullName\": \"Alice Martin\",\n    \"email\": \"alice@test.fr\",\n    \"subscriptionType\": \"BASIC\"\n}"
+            },
+            "url": { "raw": "http://localhost:8082/members", "host": ["localhost"], "port": "8082", "path": ["members"] }
+          }
+        },
+        {
+          "name": "Créer Bob (PRO)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"fullName\": \"Bob Durant\",\n    \"email\": \"bob@test.fr\",\n    \"subscriptionType\": \"PRO\"\n}"
+            },
+            "url": { "raw": "http://localhost:8082/members", "host": ["localhost"], "port": "8082", "path": ["members"] }
+          }
+        },
+        {
+          "name": "Créer Claire (ENTERPRISE)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"fullName\": \"Claire Dupont\",\n    \"email\": \"claire@test.fr\",\n    \"subscriptionType\": \"ENTERPRISE\"\n}"
+            },
+            "url": { "raw": "http://localhost:8082/members", "host": ["localhost"], "port": "8082", "path": ["members"] }
+          }
+        },
+        {
+          "name": "Vérifier Alice (suspension ?)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8082/members/1", "host": ["localhost"], "port": "8082", "path": ["members", "1"] }
+          }
+        },
+        {
+          "name": "Lister tous les membres",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8082/members", "host": ["localhost"], "port": "8082", "path": ["members"] }
+          }
+        },
+        {
+          "name": "Supprimer Bob (Kafka test)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8082/members/2", "host": ["localhost"], "port": "8082", "path": ["members", "2"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - Réservations",
+      "item": [
+        {
+          "name": "Résa 1 - Alice salle 1",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"roomId\": 1,\n    \"memberId\": 1,\n    \"startDateTime\": \"2026-04-01T09:00:00\",\n    \"endDateTime\": \"2026-04-01T11:00:00\"\n}"
+            },
+            "url": { "raw": "http://localhost:8083/reservations", "host": ["localhost"], "port": "8083", "path": ["reservations"] }
+          }
+        },
+        {
+          "name": "Résa 2 - Alice salle 2 (quota BASIC)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"roomId\": 2,\n    \"memberId\": 1,\n    \"startDateTime\": \"2026-04-02T14:00:00\",\n    \"endDateTime\": \"2026-04-02T16:00:00\"\n}"
+            },
+            "url": { "raw": "http://localhost:8083/reservations", "host": ["localhost"], "port": "8083", "path": ["reservations"] }
+          }
+        },
+        {
+          "name": "Résa 3 - Alice suspendue (doit échouer)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"roomId\": 3,\n    \"memberId\": 1,\n    \"startDateTime\": \"2026-04-03T09:00:00\",\n    \"endDateTime\": \"2026-04-03T10:00:00\"\n}"
+            },
+            "url": { "raw": "http://localhost:8083/reservations", "host": ["localhost"], "port": "8083", "path": ["reservations"] }
+          }
+        },
+        {
+          "name": "Résa - Même créneau salle 1 (doit échouer)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"roomId\": 1,\n    \"memberId\": 2,\n    \"startDateTime\": \"2026-04-01T10:00:00\",\n    \"endDateTime\": \"2026-04-01T12:00:00\"\n}"
+            },
+            "url": { "raw": "http://localhost:8083/reservations", "host": ["localhost"], "port": "8083", "path": ["reservations"] }
+          }
+        },
+        {
+          "name": "Résa Bob salle 3 (pour test suppression)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"roomId\": 3,\n    \"memberId\": 2,\n    \"startDateTime\": \"2026-04-05T10:00:00\",\n    \"endDateTime\": \"2026-04-05T12:00:00\"\n}"
+            },
+            "url": { "raw": "http://localhost:8083/reservations", "host": ["localhost"], "port": "8083", "path": ["reservations"] }
+          }
+        },
+        {
+          "name": "Annuler résa 1",
+          "request": {
+            "method": "PATCH",
+            "url": { "raw": "http://localhost:8083/reservations/1/cancel", "host": ["localhost"], "port": "8083", "path": ["reservations", "1", "cancel"] }
+          }
+        },
+        {
+          "name": "Compléter résa 2",
+          "request": {
+            "method": "PATCH",
+            "url": { "raw": "http://localhost:8083/reservations/2/complete", "host": ["localhost"], "port": "8083", "path": ["reservations", "2", "complete"] }
+          }
+        },
+        {
+          "name": "Lister toutes les réservations",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8083/reservations", "host": ["localhost"], "port": "8083", "path": ["reservations"] }
+          }
+        },
+        {
+          "name": "Réservations par salle 3 (après suppression salle)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8083/reservations/room/3", "host": ["localhost"], "port": "8083", "path": ["reservations", "room", "3"] }
+          }
+        },
+        {
+          "name": "Réservations de Bob (après suppression membre)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8083/reservations/member/2", "host": ["localhost"], "port": "8083", "path": ["reservations", "member", "2"] }
+          }
+        }
+      ]
+    }
+  ]
+}
